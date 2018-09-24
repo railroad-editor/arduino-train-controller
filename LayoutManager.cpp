@@ -4,7 +4,7 @@
 #include "Arduino.h"
 
 // 仮の設定値。本来はサーバーに問い合わせて設定を取得する。
-String LAYOUT_CONFIG = "{\"feeders\": [ {\"pPin\": 5, \"dPin\": 32 } ], \"turnouts\": [ {\"dPins\": [28,29] } ] }";
+String LAYOUT_CONFIG = "{\"powerPacks\": [ {\"pPin\": 5, \"dPin\": 32 } ], \"switchers\": [ {\"dPins\": [28,29] } ] }";
 
 
 LayoutManager::LayoutManager(int _dPin) {
@@ -24,10 +24,10 @@ void LayoutManager::configure() {
         Serial.println("parseObject() failed");
         return;
     }
-    JsonArray &feeders = root["feeders"];
-    JsonArray &turnouts = root["turnouts"];
+    JsonArray &feeders = root["powerPacks"];
+    JsonArray &turnouts = root["switchers"];
 
-    Serial.println("Feeders:");
+    Serial.println("PowerPacks:");
     for (JsonArray::iterator it = feeders.begin(); it != feeders.end(); ++it) {
         // *it contains the JsonVariant which can be casted as usuals
         JsonObject &feeder = *it;
@@ -37,7 +37,7 @@ void LayoutManager::configure() {
         this->feeders.push_back(new Feeder1D1P(dPin, pPin));
     }
 
-    Serial.println("Turnouts:");
+    Serial.println("Switchers:");
     for (JsonArray::iterator it = turnouts.begin(); it != turnouts.end(); ++it) {
         // *it contains the JsonVariant which can be casted as usuals
         JsonObject &turnout = *it;
