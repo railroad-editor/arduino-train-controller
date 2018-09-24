@@ -1,12 +1,17 @@
 #include "LayoutManager.h"
-#include "Feeder1D1P.h"
-#include "Turnout2D.h"
-#include "Arduino.h"
+#include "PowerPack1D1P.h"
+#include "Switcher2D.h"
+#include "Switcher4D.h"
+#include <Arduino.h>
 
 // 仮の設定値。本来はサーバーに問い合わせて設定を取得する。
-String LAYOUT_CONFIG = "{\"powerPacks\": [ {\"pPin\": 5, \"dPin\": 32 } ], \"switchers\": [ {\"dPins\": [28,29] } ] }";
+String LAYOUT_CONFIG = R"({ "powerPacks": [ { "pPin": 5, "dPin": 34 } ], "switchers": [ { "dPins": [28,29] }, { "dPins": [30,31,32,33] } ] })";
 
 
+/**
+ *
+ * @param _dPin 電源ピン
+ */
 LayoutManager::LayoutManager(int _dPin) {
     dPin = _dPin;
 
@@ -34,7 +39,7 @@ void LayoutManager::configure() {
         int dPin = feeder["dPin"];
         int pPin = feeder["pPin"];
         Serial.println("(" + String(dPin) + ", " + String(pPin) + ")");;;
-        this->feeders.push_back(new Feeder1D1P(dPin, pPin));
+        this->powerPacks.push_back(new PowerPack1D1P(dPin, pPin));
     }
 
     Serial.println("Switchers:");
@@ -43,18 +48,27 @@ void LayoutManager::configure() {
         JsonObject &turnout = *it;
         int pin1 = turnout["dPins"][0];
         int pin2 = turnout["dPins"][1];
-        Serial.println("(" + String(pin1) + ", " + String(pin2) + ")");
-        this->turnouts.push_back(new Turnout2D(pin1, pin2));
+
+        if (turnout["dPins"].size() == 2) {
+            Serial.println("(" + String(pin1) + ", " + String(pin2) + ")");
+            this->switchers.push_back(new Switcher2D(pin1, pin2));
+        }
+        if (turnout["dPins"].size() == 4) {
+            int pin3 = turnout["dPins"][2];
+            int pin4 = turnout["dPins"][3];
+            Serial.println("(" + String(pin1) + ", " + String(pin2) + ")");
+            this->switchers.push_back(new Switcher4D(pin1, pin2, pin3, pin4));
+        }
     }
 
     digitalWrite(dPin, HIGH);
     isConfigured = true;
 }
 
-Feeder &LayoutManager::getFeeder(int id) {
-    return *feeders.at(id);
+PowerPack &LayoutManager::getPowerPack(int id) {
+    return *powerPacks.at(id);
 }
 
-Turnout &LayoutManager::getTurnout(int id) {
-    return *turnouts.at(id);
+Switcher &LayoutManager::getSwitcher(int id) {
+    return *switchers.at(id);
 }

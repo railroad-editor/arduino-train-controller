@@ -6,7 +6,7 @@ include_directories(libs/ArduinoJson-5.13.2/src)
 include_directories(libs/ArduinoSTL-1.1.0/src)
 
 project(arduino_train_controller LANGUAGES C CXX ASM)
-get_board_id(board_id nano atmega328)
+get_board_id(board_id mega atmega2560)
 
 file(GLOB TRAIN_CONTROLER_SRCS
         "*.h"
@@ -15,7 +15,7 @@ file(GLOB TRAIN_CONTROLER_SRCS
         )
 
 add_arduino_executable(TrainController ${board_id} ${TRAIN_CONTROLER_SRCS})
-upload_arduino_target(TrainController ${board_id} TrainController.cpp)
+upload_arduino_target(TrainController ${board_id} arduino-train-controller.ino)
 
 
 #set(CMAKE_CXX_STANDARD 14)

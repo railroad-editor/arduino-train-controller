@@ -1,4 +1,4 @@
-#include "Turnout2D.h"
+#include "Switcher2D.h"
 #include "Arduino.h"
 
 /**
@@ -6,7 +6,7 @@
  * @param pin1
  * @param pin2
  */
-Turnout2D::Turnout2D(int dPin1, int dPin2) {
+Switcher2D::Switcher2D(int dPin1, int dPin2) {
 
     dPins[0] = dPin1;
     dPins[1] = dPin2;
@@ -16,8 +16,7 @@ Turnout2D::Turnout2D(int dPin1, int dPin2) {
     direction = 0;
 }
 
-void Turnout2D::setDirection(int direction) {
-    // Serial.println("dir updated raw" + String(direction));
+void Switcher2D::setDirection(int direction) {
     this->direction = constrain(direction, 0, 1);
     Serial.println("dir:" + String(this->direction));
     digitalWrite(dPins[this->direction], HIGH);
@@ -27,6 +26,6 @@ void Turnout2D::setDirection(int direction) {
     Serial.println("pin " + String(dPins[this->direction]) + "LOW");
 }
 
-void Turnout2D::toggleDirection() {
+void Switcher2D::toggleDirection() {
     this->setDirection(this->direction ^ 1);
 }

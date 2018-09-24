@@ -1,6 +1,6 @@
 #pragma once
 
-class Turnout {
+class Switcher {
 public:
     virtual void setDirection(int direction) = 0;
 

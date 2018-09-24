@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Turnout.h"
+#include "Switcher.h"
 
-class Turnout2D : public Turnout {
+class Switcher2D : public Switcher {
 public:
-    Turnout2D(int dPin1, int dPin2);
+    Switcher2D(int dPin1, int dPin2);
 
     void setDirection(int direction);
 

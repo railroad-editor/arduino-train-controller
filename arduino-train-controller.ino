@@ -50,7 +50,7 @@ void loop() {
 
         String command = tokens[0];
 
-        // config <config-json> Feeder/Turnoutの初期設定を行う
+        // config <config-json> PowerPack/Turnoutの初期設定を行う
         if (command == "config") {
             manager.configure();
         }
@@ -70,25 +70,25 @@ void loop() {
             if (subcommand == "v") {
                 int value = tokens[3].toInt();
                 Serial.println("PowerPack " + String(id) + " set value " + String(value));
-                manager.getFeeder(id).setValue(value);
+                manager.getPowerPack(id).setValue(value);
             }
             if (subcommand == "c") {
                 int value = tokens[3].toInt();
                 Serial.println("PowerPack " + String(id) + " change value by " + String(value));
-                manager.getFeeder(id).changeValueBy(value);
+                manager.getPowerPack(id).changeValueBy(value);
             }
             if (subcommand == "d") {
                 if (numTokens == 3) {
-                    manager.getTurnout(id).toggleDirection();
+                    manager.getSwitcher(id).toggleDirection();
                     Serial.println("PowerPack " + String(id) + "direction toggled");
                 }
                 if (numTokens == 4) {
                     int direction = tokens[3].toInt();
-                    manager.getTurnout(id).setDirection(direction);
+                    manager.getSwitcher(id).setDirection(direction);
                     Serial.println("PowerPack " + String(id) + "set direction to " + String(direction));
                 }
                 Serial.println("PowerPack " + String(id) + "direction toggled");
-                manager.getFeeder(id).toggleDirection();
+                manager.getPowerPack(id).toggleDirection();
             }
         }
 
@@ -97,12 +97,12 @@ void loop() {
         if (command == "s") {
             int id = tokens[1].toInt();
             if (numTokens == 2) {
-                manager.getTurnout(id).toggleDirection();
+                manager.getSwitcher(id).toggleDirection();
                 Serial.println("Switcher " + String(id) + "state toggled");
             }
             if (numTokens == 3) {
                 int state = tokens[2].toInt();
-                manager.getTurnout(id).setDirection(state);
+                manager.getSwitcher(id).setDirection(state);
                 Serial.println("Switcher " + String(id) + "set state to" + String(state));
             }
         }

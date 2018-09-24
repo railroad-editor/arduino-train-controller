@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Turnout.h"
-#include "Feeder.h"
+#include "Switcher.h"
+#include "PowerPack.h"
 #include <ArduinoJson.h>
 #include <ArduinoSTL.h>
 
@@ -17,14 +17,14 @@ public:
 
     void configure();
 
-    Feeder &getFeeder(int id);
+    PowerPack &getPowerPack(int id);
 
-    Turnout &getTurnout(int id);
+    Switcher &getSwitcher(int id);
 
     bool isConfigured;
 
 private:
     int dPin;
-    vector<Turnout *> turnouts;
-    vector<Feeder *> feeders;
+    vector<Switcher *> switchers;
+    vector<PowerPack *> powerPacks;
 };

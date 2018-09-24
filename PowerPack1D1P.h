@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Feeder.h"
+#include "PowerPack.h"
 
-class Feeder1D1P : public Feeder {
+class PowerPack1D1P : public PowerPack {
 public:
-    Feeder1D1P(int dPin, int pPin);
+    PowerPack1D1P(int dPin, int pPin);
 
     void setValue(int value);
 

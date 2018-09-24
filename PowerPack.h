@@ -1,6 +1,6 @@
 #pragma once
 
-class Feeder {
+class PowerPack {
 public:
     virtual void setValue(int value) = 0;
 
