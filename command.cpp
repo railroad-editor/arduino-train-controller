@@ -22,7 +22,6 @@ void executeCommand(std::vector<String> tokens) {
     // p <power-pack-id> c <value>      電流の大きさを相対値で設定する
     // p <power-pack-id> d <direction>  電流の方向を設定する
     // p <power-pack-id> d              電流の方向をトグルする
-    // TODO: 実装
     if (command == "p") {
         int id = tokens[1].toInt() - 1;
         if (id < 0) {
