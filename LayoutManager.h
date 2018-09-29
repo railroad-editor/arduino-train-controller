@@ -15,7 +15,7 @@ public:
      */
     LayoutManager(int dPin);
 
-    void configure();
+    void configure(String configJson);
 
     PowerPack &getPowerPack(int id);
 

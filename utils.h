@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ArduinoSTL.h>
+#include <vector>
 
 
 #define SIZE_OF_ARRAY(ary)  (sizeof(ary)/sizeof((ary)[0]))
@@ -13,4 +14,4 @@
  * @param delimiter  区切り文字
  * @return 成功で配列の要素数，要素数不足の場合は-1
  */
-int split(String *result, size_t resultsize, String data, char delimiter);
+std::vector<String> split(String data, char delimiter, int maxSize);

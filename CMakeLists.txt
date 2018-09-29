@@ -14,9 +14,7 @@ file(GLOB TRAIN_CONTROLER_SRCS
         "*.ino"
         )
 
-add_arduino_executable(TrainController ${board_id} ${TRAIN_CONTROLER_SRCS})
-upload_arduino_target(TrainController ${board_id} arduino-train-controller.ino)
+add_arduino_executable(arduino_train_controller ${board_id} ${TRAIN_CONTROLER_SRCS})
+upload_arduino_target(arduino_train_controller ${board_id} arduino-train-controller.ino)
 
-
-#set(CMAKE_CXX_STANDARD 14)
 

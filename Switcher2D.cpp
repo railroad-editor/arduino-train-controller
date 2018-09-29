@@ -19,11 +19,10 @@ Switcher2D::Switcher2D(int dPin1, int dPin2) {
 void Switcher2D::setDirection(int direction) {
     this->direction = constrain(direction, 0, 1);
     Serial.println("dir:" + String(this->direction));
+    Serial.println("pin " + String(dPins[this->direction]) + " HIGH for 15ms");
     digitalWrite(dPins[this->direction], HIGH);
-    Serial.println("pin " + String(dPins[this->direction]) + "HIGH");
     delay(15);
     digitalWrite(dPins[this->direction], LOW);
-    Serial.println("pin " + String(dPins[this->direction]) + "LOW");
 }
 
 void Switcher2D::toggleDirection() {

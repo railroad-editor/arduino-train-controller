@@ -4,8 +4,9 @@
 #include "Switcher4D.h"
 #include <Arduino.h>
 
-// 仮の設定値。本来はサーバーに問い合わせて設定を取得する。
-String LAYOUT_CONFIG = R"({ "powerPacks": [ { "pPin": 5, "dPin": 34 } ], "switchers": [ { "dPins": [28,29] }, { "dPins": [30,31,32,33] } ] })";
+// 開発用の仮の設定。
+// TODO: Productionでは削除
+String LAYOUT_CONFIG = R"({"powerPacks":[{"pPin":5,"dPin":34}],"switchers":[{"dPins":[28,29]},{"dPins":[30,31,32,33]}]})";
 
 
 /**
@@ -19,12 +20,19 @@ LayoutManager::LayoutManager(int _dPin) {
     digitalWrite(dPin, LOW);
 }
 
-void LayoutManager::configure() {
+void LayoutManager::configure(String configJson) {
 
     Serial.println("Configuration start");
 
+    // 開発用の仮の設定。
+    // TODO: Productionでは削除
+    if (configJson.length() == 0) {
+        configJson = LAYOUT_CONFIG;
+        Serial.println("Using default configuration");
+    }
+
     StaticJsonBuffer<300> jsonBuffer;
-    JsonObject &root = jsonBuffer.parseObject(LAYOUT_CONFIG);
+    JsonObject &root = jsonBuffer.parseObject(configJson);
     if (!root.success()) {
         Serial.println("parseObject() failed");
         return;

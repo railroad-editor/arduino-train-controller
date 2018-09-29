@@ -1,16 +1,23 @@
 #include "utils.h"
 
-int split(String *result, size_t resultsize, String data, char delimiter) {
-    int index = 0;
-    int datalength = data.length();
-    for (int i = 0; i < datalength; i++) {
+std::vector<String> split(String data, char delimiter, int maxSize) {
+    unsigned int beginIndex = 0;
+    unsigned int dataLength = data.length();
+    std::vector<String> result;
+    for (unsigned int i = 0; i < dataLength; i++) {
         char tmp = data.charAt(i);
         if (tmp == delimiter) {
-            result[index].trim();
-            index++;
-            if (index > (resultsize - 1)) return -1;
-        } else result[index] += tmp;
+            if (result.size() >= maxSize) {
+                return result;
+            }
+            String token = data.substring(beginIndex, i);
+            token.trim();
+            result.push_back(token);
+            beginIndex = i + 1;
+        }
     }
-    result[index].trim();
-    return (index + 1);
+    String token = data.substring(beginIndex);
+    token.trim();
+    result.push_back(token);
+    return result;
 }
